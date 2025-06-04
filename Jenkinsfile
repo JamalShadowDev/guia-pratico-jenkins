@@ -5,7 +5,7 @@ pipeline{
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerapp = docker.build("meuapp:${env.BUILD_ID}", "-f ./src/Dockerfile .")
+                    dockerapp = docker.build("jamalshadowdev/meuapp:${env.BUILD_ID}", "-f ./src/Dockerfile .")
                 }
             }
         }
@@ -13,7 +13,7 @@ pipeline{
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                    docker.withRegistry('', 'dockerhub') {
                         dockerapp.push('latest')
                         dockerapp.push("${env.BUILD_ID}")
                     }
