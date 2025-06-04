@@ -4,13 +4,18 @@ pipeline{
     stages {
         stage('Build Docker Image') {
             steps {
-                echo 'Executando Build'
+                dockerapp = docker.build("meuapp:${env.BUILD_ID}", '-f ./guia-pratico-jenkins\src\Dockerfile')
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                echo 'Executando Push'
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                        dockerapp.push('latest')
+                        dockerapp.push("${env.BUILD_ID}")
+                    }
+                }
             }
         }
 
