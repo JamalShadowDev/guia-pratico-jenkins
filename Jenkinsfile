@@ -22,8 +22,16 @@ pipeline{
         }
 
         stage('Deploy no Kubernetes') {
+            environment {
+                tag_version = "${env.BUILD_ID}"
+            }
             steps {
-                echo 'Executando k Apply'
+                script {
+                    withKubeConfig([credentialsId: 'kind-kubeconfig']) {
+                        sh 'sed -i "s/{{tag}}/$tag_version/g" ./k8s/deployment.yaml'
+                        sh 'kubectl apply -f k8s/deployment.yaml'
+                    }
+                }
             }
         }
     }

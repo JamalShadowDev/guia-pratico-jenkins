@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: conversao-temperatura
-        image: fabricioveronez/live-jenkins
+        image: jamalshadowdev/meuapp:latest
         ports:
         - containerPort: 8080
 ---
@@ -28,5 +28,6 @@ spec:
   ports:
   - port: 80
     targetPort: 8080
-  type: LoadBalancer
+    nodePort: 30080
+  type: NodePort
 
