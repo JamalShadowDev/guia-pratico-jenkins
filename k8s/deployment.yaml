@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: conversao-temperatura
-        image: jamalshadowdev/meuapp:latest
+        image: jamalshadowdev/meuapp:{{tag}}
         ports:
-        - containerPort: 8080
+        - containerPort: 8088
 ---
 apiVersion: v1
 kind: Service
@@ -27,7 +27,7 @@ spec:
     app: conversao-temperatura
   ports:
   - port: 80
-    targetPort: 8080
+    targetPort: 8088
     nodePort: 30080
   type: NodePort
 
